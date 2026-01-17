@@ -1,52 +1,89 @@
 # CoffeShopMAUI
 
-## Overview
-CoffeShopMAUI is a .NET 8 MAUI mobile ordering app for a small coffee shop. Customers browse categorized menus, adjust quantities, review a cart, and complete checkout that generates a unique order number, captures contact details, and stores the order for later retrieval.
+A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Development Assessment CA 1.
+
+---
+
+## Table of Contents
+1. [Project Goals](#project-goals)
+2. [UX Design](#ux-design)
+3. [Features](#features)
+4. [Information Architecture](#information-architecture)
+5. [Technologies](#technologies)
+6. [Testing](#testing)
+7. [Deployment](#deployment)
+8. [Credits](#credits)
+
+---
+
+## Project Goals
+- **Business Goal:** Provide a mobile-first ordering experience for a boutique coffee shop.
+- **User Goal:** Quickly browse categories (hot drinks, cold drinks, food), adjust quantities, and place an order from any supported platform.
+- **Student Goal:** Demonstrate MAUI, MVVM, and local persistence skills for the CA submission.
+
+## UX Design
+- **Target Audience:** Walk-in customers, remote pickup users, and staff reviewing same-day orders.
+- **User Stories:**
+  - As a customer I want to see products grouped by category so that I can find items faster.
+  - As a customer I want to edit quantities from the cart so that mistakes can be fixed before checkout.
+  - As a staff member I want to review today’s orders so I can prepare them accurately.
+- **Structure:** `AppShell` navigation drives page-to-page flow. Splash/login leads to the home page, which links to category pages, cart, checkout, and order history.
+- **Wireframes/Mockups:** _Include links or screenshots of Figma/Whimsical boards here._
 
 ## Features
-- Menu pages for hot drinks, cold drinks, and food
-- Quantity adjustments, cart review, and item removal
-- Checkout form with customer name/phone plus receipt screen
-- Order history listing all orders placed today
-- Local persistence using file I/O or SQLite
-- MVVM pages targeting Android, iOS, Windows, and macOS
+- Categorized menu (`Hot Drinks`, `Cold Drinks`, `Food`).
+- Quantity steppers and cart summary with item removal.
+- Checkout page collecting name and phone, generating a unique order number, and showing an order receipt.
+- Order history page filtered to the current day using persisted data (file I/O or SQLite).
+- Account/profile screen for optional customer preferences (placeholder for extension).
+- Responsive styling with reusable resources defined in `Resources/Styles`.
+- MVVM view models with commands, dependency-injected services, and navigation via `AppShell` routes.
 
-## Architecture
-- Multi-target .NET 8 MAUI solution with `AppShell` navigation
-- `App.xaml`/`App.xaml.cs` bootstraps resources and main page
-- ViewModels expose commands and observable state for each page
-- Persistence handled through a repository abstraction for testability
+### Future Enhancements
+- Real-time stock updates from a remote API.
+- Push notifications confirming order readiness.
+- Payment gateway integration.
 
-## Prerequisites
-- .NET 8 SDK
-- Visual Studio 2022 17.8+ with the .NET MAUI workload installed
-- Emulator or device for Android/iOS, or Windows/Mac Catalyst runtime
+## Information Architecture
+- **Data Models:** `MenuItem`, `CartItem`, `Order`, `OrderLine`.
+- **Persistence:** Repository abstraction (file or SQLite) registered in `MauiProgram.cs`.
+- **Navigation:**
+  - `MainPage` (splash/login)
+  - `HomePage`
+  - `AllCoffeeShopPage` (category listing)
+  - `CartPage`
+  - `CheckoutPage`
+  - `OrderReceiptPage`
+  - `OrderHistoryPage`
+  - `AccountInfoPage`
 
-## Getting Started
-1. Clone the repo: `git clone https://github.com/<your-account>/CoffeShopMAUI.git`
-2. Open `CoffeShopMAUI.sln` in Visual Studio.
-3. Restore NuGet packages and build.
-4. Select a target (Android emulator, Windows, iOS, Mac Catalyst) and press **F5**.
+## Technologies
+- .NET 8, C# 12
+- .NET MAUI (Android, iOS, Windows, Mac Catalyst)
+- MVVM Toolkit / ObservableObject pattern
+- SQLite-net or System.Text.Json for storage
+- Visual Studio 2022 17.8+
 
-## Usage
-1. Pass the splash/login screen to reach the home menu.
-2. Pick a category and add items with the required quantities.
-3. Open the cart to adjust or remove items.
-4. Continue to checkout, enter customer details, and confirm to view the receipt.
-5. Visit the order history page to review the day’s orders.
+## Testing
+Summarize manual and automated testing performed:
+- **Unit Tests:** _List any view model or repository tests plus coverage notes._
+- **Manual Scenarios:**
+  - Add multiple items across categories and verify totals.
+  - Remove items from cart and ensure totals recalc.
+  - Complete checkout with invalid and valid data.
+  - Confirm order history displays only today’s entries.
+  - Run app on Android emulator, Windows desktop, and iOS/Mac Catalyst (if available).
+- **Bugs/Issues:** _Document known issues and workarounds._
 
-## Project Structure
-```
-CoffeShopMAUI/
- ?? App.xaml / App.xaml.cs
- ?? AppShell.xaml / AppShell.xaml.cs
- ?? MauiProgram.cs
- ?? Pages/
- ?? ViewModels/
- ?? Resources/
-```
+## Deployment
+1. Clone repository and open `CoffeShopMAUI.sln` in Visual Studio.
+2. Restore NuGet packages (`dotnet restore` or VS auto-restore).
+3. Select target platform: Android emulator/device, Windows machine, iOS simulator, or Mac Catalyst.
+4. Build and deploy (`F5`).
+5. To publish, follow MAUI platform-specific publishing guides (APK/IPA/MSIX/PKG).
 
-## Testing & Validation
-- Create multiple orders and verify they appear in the order history for the current date.
-- Ensure checkout buttons remain disabled when the cart is empty or input is invalid.
-- Deploy to each platform target to confirm consistent UI and functionality.
+_GitHub Hosting:_ README and screenshots live at the repository root so the project overview appears on the repo front page.
+
+## Credits
+- **Author:** _Add your name, cohort, and Slack handle._
+- **Acknowledgements:** Tutors, ATU Donegal.
