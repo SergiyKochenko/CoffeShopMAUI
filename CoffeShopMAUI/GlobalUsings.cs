@@ -1,0 +1,15 @@
+﻿global using System;
+global using System.Collections.ObjectModel;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using CoffeShopMAUI.Services;
+global using CoffeShopMAUI.Models;
+global using CoffeShopMAUI.ViewModels;
+global using CoffeShopMAUI.Pages;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using CommunityToolkit.Maui.Alerts;
+global using CommunityToolkit.Maui.Core;
+global using Microsoft.Maui.Controls;
+global using Microsoft.Maui.Graphics;

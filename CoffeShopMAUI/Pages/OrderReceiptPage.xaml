@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CoffeShopMAUI.ViewModels"
+             xmlns:models="clr-namespace:CoffeShopMAUI.Models"
+             x:Class="CoffeShopMAUI.Pages.OrderReceiptPage"
+             x:DataType="vm:OrderReceiptViewModel"
+             Title="Order Receipt">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+        <VerticalStackLayout Padding="15,15,15,20" Spacing="16">
+            <Frame BorderColor="PaleGoldenrod" CornerRadius="12" Padding="12">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="6">
+                    <Label Grid.Row="0" Text="Order #" FontAttributes="Bold" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Order.OrderNumber}" Margin="8,0,0,0" />
+
+                    <Label Grid.Row="1" Text="Customer:" FontAttributes="Bold" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Order.CustomerName}" Margin="8,0,0,0" />
+
+                    <Label Grid.Row="2" Text="Phone:" FontAttributes="Bold" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Order.PhoneNumber}" Margin="8,0,0,0" />
+
+                    <Label Grid.Row="3" Text="Date:" FontAttributes="Bold" />
+                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding Order.CreatedAt, StringFormat='{}{0:MMM d, h:mm tt}'}" Margin="8,0,0,0" />
+
+                    <Label Grid.Row="4" Text="Total:" FontAttributes="Bold" />
+                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding Order.TotalAmount, StringFormat='€{0:N2}'}" FontAttributes="Bold" Margin="8,0,0,0" />
+                </Grid>
+            </Frame>
+
+            <Label Text="Items" FontAttributes="Bold" FontSize="18" />
+            <CollectionView ItemsSource="{Binding Items}" HeightRequest="250">
+                <CollectionView.EmptyView>
+                    <Label Text="No items" HorizontalTextAlignment="Center" TextColor="Gray" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:OrderLine">
+                        <Grid ColumnDefinitions="*,Auto,Auto" Padding="6">
+                            <Label Text="{Binding Name}" />
+                            <Label Grid.Column="1" />
+                            <Label Grid.Column="2" Text="{Binding LineTotal, StringFormat='€{0:N2}'}" FontAttributes="Bold" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+        </ScrollView>
+        <Border Grid.Row="1"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                Padding="20,10,20,20">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Order successfully placed"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       TextColor="Green" />
+                <Button Text="Back to Menu"
+                        BackgroundColor="DarkGoldenrod"
+                        TextColor="White"
+                        CornerRadius="22"
+                        Padding="20,10"
+                        Clicked="Done_Clicked" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+ </ContentPage>

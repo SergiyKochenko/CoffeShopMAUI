@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CoffeShopMAUI.ViewModels"
+             x:Class="CoffeShopMAUI.Pages.AccountInfoPage"
+             x:DataType="vm:AccountInfoViewModel"
+             Title="My Account">
+    <ScrollView>
+        <VerticalStackLayout Spacing="20"
+                             Padding="20">
+            <Label Text="My Account Info"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center" />
+
+            <Border StrokeShape="RoundRectangle 18"
+                    StrokeThickness="1"
+                    Stroke="PaleGoldenrod"
+                    BackgroundColor="White"
+                    Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="Auto,*"
+                          RowDefinitions="Auto,Auto">
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid"
+                                         Binding="{Binding HasInfo}"
+                                         Value="False">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Grid.Triggers>
+                        <Label Text="Name:  " FontAttributes="Bold" />
+                        <Label Grid.Column="1" Text="{Binding CustomerName}" />
+                        <Label Grid.Row="1" Text="Phone:  " FontAttributes="Bold" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding PhoneNumber}" />
+                    </Grid>
+
+                    <Label Text="No saved account info yet."
+                           TextColor="Gray"
+                           HorizontalTextAlignment="Center">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding HasInfo}"
+                                         Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

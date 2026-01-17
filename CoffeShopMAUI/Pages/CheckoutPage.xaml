@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CoffeShopMAUI.ViewModels"
+             xmlns:models="clr-namespace:CoffeShopMAUI.Models"
+             x:Class="CoffeShopMAUI.Pages.CheckoutPage"
+             Title="Checkout"
+             x:DataType="vm:CheckoutViewModel">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+        <VerticalStackLayout Padding="15,15,15,20" Spacing="16">
+            <Label Text="Order details"
+                   FontSize="24"
+                   FontAttributes="Bold" />
+
+            <Frame BorderColor="PaleGoldenrod"
+                   CornerRadius="12"
+                   Padding="10">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Label Text="Order #" FontAttributes="Bold" />
+                    <Label Grid.Column="1" Text="{Binding OrderNumber}" />
+                </Grid>
+            </Frame>
+
+            <Entry Placeholder="Your name"
+                   Text="{Binding CustomerName}"
+                   TextChanged="NameEntry_TextChanged" />
+            <Entry Placeholder="Phone number"
+                   Keyboard="Telephone"
+                   Text="{Binding PhoneNumber}" />
+
+            <Label Text="Items"
+                   FontAttributes="Bold"
+                   FontSize="18" />
+            <CollectionView ItemsSource="{Binding Items}" HeightRequest="220">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:CoffeeDrink">
+                        <Grid ColumnDefinitions="*,Auto" Padding="4">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Name}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1"
+                                   Text="{Binding Amount, StringFormat='€{0:N2}'}"
+                                   FontAttributes="Bold" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No items in cart"
+                           HorizontalTextAlignment="Center"
+                           TextColor="Gray" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+        </VerticalStackLayout>
+        </ScrollView>
+        <Border Grid.Row="1"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                Padding="20,10,20,20">
+            <VerticalStackLayout Spacing="10">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="Total"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                    <Label Grid.Column="1"
+                           Text="{Binding TotalAmount, StringFormat='€{0:N2}'}"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                </Grid>
+                <Button Text="Place order"
+                        BackgroundColor="DarkGoldenrod"
+                        TextColor="White"
+                        CornerRadius="22"
+                        Padding="20,10"
+                        Command="{Binding SubmitOrderCommand}" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

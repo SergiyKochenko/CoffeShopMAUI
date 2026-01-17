@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="CoffeShopMAUI.Pages.MainPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#C68E27">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="{OnIdiom Phone='24,0,24,40', Tablet='80,50,80,80', Desktop='120,50,120,80'}"
+                             Spacing="24"
+                             HorizontalOptions="Center"
+                             MaximumWidthRequest="520">
+            <Label Text="Coffee House"
+                   FontSize="{OnIdiom Phone=48, Tablet=64, Desktop=56}"
+                   TextColor="White"
+                   FontAttributes="Bold" />
+
+            <Border StrokeThickness="0"
+                    BackgroundColor="White"
+                    Padding="10"
+                    StrokeShape="RoundRectangle 15"
+                    HorizontalOptions="Center">
+                <Border.Shadow>
+                    <Shadow Brush="#33000000" Radius="10" />
+                </Border.Shadow>
+                <Image Source="coffee_house_banner"
+                       HeightRequest="{OnIdiom Phone=100, Tablet=130, Desktop=120}"
+                       WidthRequest="{OnIdiom Phone=320, Tablet=420, Desktop=360}"
+                       Aspect="AspectFill"
+                       SemanticProperties.Description="Coffee house banner" />
+            </Border>
+
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Brewed to Perfection"
+                       FontSize="{OnIdiom Phone=30, Tablet=36, Desktop=32}"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+                <Label Text="Sip freshly roasted coffee sourced from farms across the globe."
+                       FontSize="{OnIdiom Phone=18, Tablet=20, Desktop=18}"
+                       TextColor="#FFF6E5"
+                       LineHeight="1.3" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="14">
+                <Border StrokeShape="RoundRectangle 18"
+                        BackgroundColor="White"
+                        StrokeThickness="0"
+                        Padding="5">
+                    <Entry x:Name="NameEntry"
+                           Placeholder="Your name"
+                           BackgroundColor="Transparent"
+                           TextColor="Black"
+                           ReturnType="Next"
+                           ClearButtonVisibility="WhileEditing"
+                           PlaceholderColor="#8B8B8B" />
+                </Border>
+
+                <Border StrokeShape="RoundRectangle 18"
+                        BackgroundColor="White"
+                        StrokeThickness="0"
+                        Padding="5">
+                    <Entry x:Name="PhoneEntry"
+                           Placeholder="Phone number"
+                           Keyboard="Telephone"
+                           BackgroundColor="Transparent"
+                           TextColor="Black"
+                           ClearButtonVisibility="WhileEditing"
+                           PlaceholderColor="#8B8B8B" />
+                </Border>
+            </VerticalStackLayout>
+
+            <Button Text="Enter Coffee Menu"
+                    FontSize="{OnIdiom Phone=18, Tablet=22, Desktop=20}"
+                    FontAttributes="Bold"
+                    BackgroundColor="#2D2D2D"
+                    TextColor="#C68E27"
+                    CornerRadius="30"
+                    Padding="5"
+                    HorizontalOptions="Fill"
+                    Margin="0,0,0,20"
+                    ImageSource="right_arrow"
+                    ContentLayout="Right,12"
+                    Clicked="EnterButton_Clicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
