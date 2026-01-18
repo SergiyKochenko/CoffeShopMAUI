@@ -112,9 +112,9 @@
 
             <Grid ColumnDefinitions="*,*">
                 <Label Grid.Column="0"
-                       Text="Popular drinks"
+                       Text="Popular drinks &amp; food"
                        VerticalOptions="End"
-                       FontSize="20"
+                       FontSize="18"
                        FontAttributes="Bold" />
                 <Label Grid.Column="1"
                        Text="View all"

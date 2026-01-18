@@ -7,17 +7,17 @@
     {
         private const string FreshBrewsDisplayTitle = "Fresh Brews";
         private const string FreshBrewsFilter = "Fresh Brews";
-        private static readonly string[] DrinkCategories = { "Hot drinks", "Cold drinks" };
+        private static readonly string[] DrinkCategories = { "Hot drinks", "Cold drinks", "Specialty drinks" };
         private readonly CoffeeMenuService _menuService;
 
         public CoffeeMenuViewModel(CoffeeMenuService menuService)
         {
             _menuService = menuService;
-            MenuItems = new();
+            MenuItems = new ObservableCollection<CoffeeDrink>();
             LoadMenu();
         }
-
-        public ObservableCollection<CoffeeDrink> MenuItems { get; }
+            
+        public ObservableCollection<CoffeeDrink> MenuItems { get; private set; }
 
         [ObservableProperty]
         private bool _fromSearch;
