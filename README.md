@@ -121,6 +121,24 @@ Summarize manual and automated testing performed:
 
 _GitHub Hosting:_ README and screenshots live at the repository root so the project overview appears on the repo front page.
 
+## Screenshots
+
+| Login | Home | Hot Drinks | Cold Drinks |
+| --- | --- | --- | --- |
+| <img src="docs/loging_page.png" width="240" alt="Login page" /> | <img src="docs/home_page.png" width="240" alt="Home page" /> | <img src="docs/hot_drinks_page.png" width="240" alt="Hot drinks page" /> | <img src="docs/cold_drinks_page.png" width="240" alt="Cold drinks page" /> |
+
+| Fresh Brews | All Categories | Food | Drink Detail |
+| --- | --- | --- | --- |
+| <img src="docs/fresh_brews_page.png" width="240" alt="Fresh brews page" /> | <img src="docs/all_category_page.png" width="240" alt="All categories page" /> | <img src="docs/food_page.png" width="240" alt="Food page" /> | <img src="docs/detail_item_page.png" width="240" alt="Drink detail page" /> |
+
+| Cart | Checkout | Order Receipt | Order History |
+| --- | --- | --- | --- |
+| <img src="docs/cert_page.png" width="240" alt="Cart page" /> | <img src="docs/checkout_page.png" width="240" alt="Checkout page" /> | <img src="docs/order_receipt.png" width="240" alt="Order receipt" /> | <img src="docs/history_order_page.png" width="240" alt="Order history page" /> |
+
+| My Account | Account Menu | Logout Menu | Logout Confirmation |
+| --- | --- | --- | --- |
+| <img src="docs/my_account_page.png" width="240" alt="My account page" /> | <img src="docs/my_account_dropdown_menu.png" width="240" alt="My account dropdown menu" /> | <img src="docs/logout_dropdown_menu.png" width="240" alt="Logout dropdown menu" /> | <img src="docs/logout_popup.png" width="240" alt="Logout confirmation popup" /> |
+
 ## Credits
 - **Author:** _Add your name, cohort, and Slack handle._
 - **Acknowledgements:** Tutors, ATU Donegal.
