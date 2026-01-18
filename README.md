@@ -140,5 +140,6 @@ _GitHub Hosting:_ README and screenshots live at the repository root so the proj
 | <img src="docs/my_account_page.png" width="240" alt="My account page" /> | <img src="docs/my_account_dropdown_menu.png" width="240" alt="My account dropdown menu" /> | <img src="docs/logout_dropdown_menu.png" width="240" alt="Logout dropdown menu" /> | <img src="docs/logout_popup.png" width="240" alt="Logout confirmation popup" /> |
 
 ## Credits
-- **Author:** _Add your name, cohort, and Slack handle._
-- **Acknowledgements:** Tutors, ATU Donegal.
+- **Author:** Student of ATU Donegal Sergiy Kochenko
+- **Acknowledgements:** Tutor Gerard McCloskey at ATU Donegal
+- 
