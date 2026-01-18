@@ -6,18 +6,12 @@
              xmlns:models="clr-namespace:CoffeShopMAUI.Models;assembly=CoffeShopMAUI.Core"
              xmlns:vm="clr-namespace:CoffeShopMAUI.ViewModels"
              x:Class="CoffeShopMAUI.Pages.CoffeeMenuPage"
-             x:DataType="vm:CoffeeMenuViewModel">
-    <ContentPage.Triggers>
-        <DataTrigger TargetType="ContentPage"
-                     Binding="{Binding FromSearch}"
-                     Value="True">
-            <Setter Property="Title" Value="Search for coffee"/>
-        </DataTrigger>
-    </ContentPage.Triggers>
-
+             x:DataType="vm:CoffeeMenuViewModel"
+             Title="{Binding CategoryTitle}">
     <Grid RowDefinitions="Auto, *">
         <SearchBar Grid.Row="0"
                    x:Name="searchBar"
+                   IsVisible="{Binding IsSearchBarVisible}"
                    Placeholder="Search for coffee..."
                    PlaceholderColor="Goldenrod"
                    CancelButtonColor="Red"

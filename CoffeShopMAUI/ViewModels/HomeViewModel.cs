@@ -5,6 +5,8 @@ namespace CoffeShopMAUI.ViewModels
 {
     public partial class HomeViewModel : ObservableObject
     {
+        private const string FreshBrewsDisplayTitle = "Fresh Brews";
+        private const string FreshBrewsFilter = "Fresh Brews";
         private readonly CoffeeMenuService _menuService;
 
         public HomeViewModel(CoffeeMenuService menuService)
@@ -17,10 +19,10 @@ namespace CoffeShopMAUI.ViewModels
         public ObservableCollection<CoffeeDrink> FeaturedDrinks { get; }
 
         [RelayCommand]
-        private async Task GoToMenuPage() => await NavigateToMenuAsync(false, "Coffee Menu");
+        private async Task GoToMenuPage() => await NavigateToMenuAsync(false, FreshBrewsDisplayTitle, FreshBrewsFilter);
 
         [RelayCommand]
-        private async Task GoToMenuFromSearch() => await NavigateToMenuAsync(true, "Coffee Menu");
+        private async Task GoToMenuFromSearch() => await NavigateToMenuAsync(true, "Search for coffee");
 
         [RelayCommand]
         private async Task GoToAllItems() => await NavigateToMenuAsync(false, "All Items");
@@ -45,7 +47,7 @@ namespace CoffeShopMAUI.ViewModels
             MainThread.BeginInvokeOnMainThread(() => Application.Current!.MainPage = new Pages.MainPage());
         }
 
-        private async Task NavigateToMenuAsync(bool fromSearch, string displayTitle)
+        private async Task NavigateToMenuAsync(bool fromSearch, string displayTitle, string category = "All")
         {
             var shell = Shell.Current;
             if (shell is null)
@@ -56,7 +58,7 @@ namespace CoffeShopMAUI.ViewModels
             var parameters = new Dictionary<string, object>
             {
                 ["FromSearch"] = fromSearch,
-                ["Category"] = "All",
+                ["Category"] = category,
                 [nameof(CoffeeMenuViewModel.DisplayTitle)] = displayTitle
             };
 

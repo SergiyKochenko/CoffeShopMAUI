@@ -4,6 +4,9 @@ namespace CoffeShopMAUI.Services
 {
     public class CoffeeMenuService
     {
+        public const string DrinksCategoryFilter = "Fresh Brews";
+        private static readonly string[] DrinkCategories = { "Hot drinks", "Cold drinks" };
+
         private static readonly IEnumerable<CoffeeDrink> _drinks = new List<CoffeeDrink>
         {
             new() { Name = "Espresso", Image = "espresso", Price = 2.50, Category = "Hot drinks", Description = "Concentrated shot of rich coffee with a bold flavor." },
@@ -36,11 +39,19 @@ namespace CoffeShopMAUI.Services
                 return _drinks;
             }
 
+            if (string.Equals(category, DrinksCategoryFilter, StringComparison.OrdinalIgnoreCase))
+            {
+                return _drinks.Where(IsDrinkCategory);
+            }
+
             return _drinks.Where(d => d.Category.Equals(category, StringComparison.OrdinalIgnoreCase));
         }
 
         public IEnumerable<CoffeeDrink> GetFeaturedDrinks(int count = 6) =>
-            _drinks.OrderBy(_ => Guid.NewGuid()).Take(count);
+            GetByCategory(DrinksCategoryFilter).OrderBy(_ => Guid.NewGuid()).Take(count);
+
+        private static bool IsDrinkCategory(CoffeeDrink drink) =>
+            DrinkCategories.Any(c => drink.Category.Equals(c, StringComparison.OrdinalIgnoreCase));
 
         public IEnumerable<CoffeeDrink> SearchMenu(string? searchTerm, string? category = null)
         {

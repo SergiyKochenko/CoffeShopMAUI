@@ -33,6 +33,7 @@
         <CheckEolTargetFramework>false</CheckEolTargetFramework>
         <CheckEolWorkloads>false</CheckEolWorkloads>
         <DefaultLanguage>en-US</DefaultLanguage>
+        <ApplicationDefaultLanguage>en-US</ApplicationDefaultLanguage>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-android'">

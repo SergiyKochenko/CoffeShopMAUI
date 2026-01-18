@@ -8,13 +8,12 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
 1. [Project Goals](#project-goals)
 2. [UX Design](#ux-design)
 3. [Features](#features)
-4. [Information Architecture](#information-architecture)
-5. [Technologies](#technologies)
-6. [Testing](#testing)
-7. [Deployment](#deployment)
-8. [Credits](#credits)
-
----
+4. [User Manual](#user-manual)
+5. [Information Architecture](#information-architecture)
+6. [Technologies](#technologies)
+7. [Testing](#testing)
+8. [Deployment](#deployment)
+9. [Credits](#credits)
 
 ## Project Goals
 - **Business Goal:** Provide a mobile-first ordering experience for a boutique coffee shop.
@@ -38,6 +37,32 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
 - Account/profile screen for optional customer preferences (placeholder for extension).
 - Responsive styling with reusable resources defined in `Resources/Styles`.
 - MVVM view models with commands, dependency-injected services, and navigation via `AppShell` routes.
+
+## User Manual
+1. **Launching the app**
+   - Deploy via Visual Studio.
+   - Sign in when the splash/login screen appears.
+2. **Exploring the menu**
+   - Use the category chips (`Hot Drinks`, `Cold Drinks`, `Food`) or tap `Browse all drinks` to open `AllCoffeeShopPage`.
+   - Tap any drink to see its description, ingredients, and price on the detail page.
+3. **Adding to the cart**
+   - On the detail card, press `+`/`-` steppers to choose size and quantity, then tap `Add to cart`.
+   - The cart badge updates instantly; open the cart via the toolbar button or `Cart` tab.
+4. **Managing the cart**
+   - Review every item on `CartPage`. Use the `+`/`-` controls to change quantities or the trash icon to remove items.
+   - Tap `Clear Cart` from the toolbar to start over.
+5. **Placing an order**
+   - Hit `Place Order` on `CartPage` to navigate to `CheckoutPage`.
+   - Enter your name and phone number, then confirm. Validation highlights any missing info.
+   - A receipt with the order number displays on `OrderReceiptPage`. Use `Continue Shopping` to return home.
+6. **Tracking past orders**
+   - Open the `History` tab or `OrderHistoryPage` link to view the current day’s orders in reverse chronological order.
+   - Tap an entry to re-open its receipt.
+7. **Account & settings**
+   - From the profile icon, open `AccountInfoPage` to update saved preferences (name, favorite drinks, pickup notes).
+8. **Troubleshooting**
+   - If totals look incorrect, refresh by pulling down on the cart list.
+   - If the app was reinstalled, previous orders will be missing because storage is local; contact the shop if a receipt is needed.
 
 ### Future Enhancements
 - Real-time stock updates from a remote API.
@@ -73,8 +98,6 @@ Summarize manual and automated testing performed:
 	 
 	<img src="docs/coverage-summary.png" width="420" alt="Coverage summary" />
 	
- 
-
 - **Manual Tests:**
 
 | Scenario | Steps | Expected Outcome |
