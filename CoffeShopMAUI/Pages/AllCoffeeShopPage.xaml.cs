@@ -1,4 +1,6 @@
-﻿namespace CoffeShopMAUI.Pages;
+﻿using CoffeShopMAUI.ViewModels;
+
+namespace CoffeShopMAUI.Pages;
 
 public partial class CoffeeMenuPage : ContentPage
 {

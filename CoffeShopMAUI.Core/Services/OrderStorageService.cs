@@ -1,14 +1,25 @@
 using System.IO;
 using System.Text.Json;
-using Microsoft.Maui.Storage;
+using CoffeShopMAUI.Models;
 
 namespace CoffeShopMAUI.Services;
 
 public class OrderStorageService
 {
     private const string OrdersFileName = "orders.json";
+    private readonly string _baseDirectory;
 
-    private string FilePath => Path.Combine(FileSystem.AppDataDirectory, OrdersFileName);
+    public OrderStorageService(string baseDirectory)
+    {
+        if (string.IsNullOrWhiteSpace(baseDirectory))
+        {
+            throw new ArgumentException("Base directory must be provided", nameof(baseDirectory));
+        }
+
+        _baseDirectory = baseDirectory;
+    }
+
+    private string FilePath => Path.Combine(_baseDirectory, OrdersFileName);
 
     public async Task SaveOrderAsync(Order order)
     {

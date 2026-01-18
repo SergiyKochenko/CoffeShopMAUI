@@ -1,4 +1,6 @@
-﻿namespace CoffeShopMAUI.Services
+﻿using CoffeShopMAUI.Models;
+
+namespace CoffeShopMAUI.Services
 {
     public class CoffeeMenuService
     {

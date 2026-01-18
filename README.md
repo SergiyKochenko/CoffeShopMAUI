@@ -66,14 +66,28 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
 
 ## Testing
 Summarize manual and automated testing performed:
-- **Unit Tests:** _List any view model or repository tests plus coverage notes._
-- **Manual Scenarios:**
-  - Add multiple items across categories and verify totals.
-  - Remove items from cart and ensure totals recalc.
-  - Complete checkout with invalid and valid data.
-  - Confirm order history displays only today’s entries.
-  - Run app on Android emulator, Windows desktop, and iOS/Mac Catalyst (if available).
-- **Bugs/Issues:** _Document known issues and workarounds._
+- **Unit Tests:** Automated view-model/service tests live in `CoffeShopMAUI.Tests`. Run `dotnet test CoffeShopMAUI.Tests` to execute them. Latest Cobertura output (18/01/2026 13:34) reported:
+  - Line coverage 88.6% (78/88 lines), branch coverage 68.7% (11/16), method coverage 85.7% (24/28).
+  - Fully covered methods: 21/28.
+  - Breakdown: `CoffeShopMAUI.Core` 88.6%, `CoffeeDrink` 71.4%, `Order` 100%, `OrderLine` 100%, `CoffeeMenuService` 83.7%, `OrderStorageService` 94.1%.
+	 
+	<img src="docs/coverage-summary.png" width="420" alt="Coverage summary" />
+	
+ 
+
+- **Manual Tests:**
+
+| Scenario | Steps | Expected Outcome |
+| --- | --- | --- |
+| Add items across categories | Add hot, cold, and food items from the home page, then open the cart | Totals reflect each item, per-item quantity matches selections |
+| Remove items from cart | From `CartPage`, tap trash icon beside an item | Item disappears, total recalculates immediately |
+| Checkout validation | On `CheckoutPage`, submit with empty fields, then with valid name/phone | Validation blocks invalid submissions; valid submission navigates to receipt |
+| Order history filter | Place two orders on the same day, then open `OrderHistoryPage` | Only today’s orders are listed, sorted newest first |
+| Cross-platform smoke test | Deploy to Android emulator and Windows desktop | Navigation works, visuals align with design on both platforms |
+
+- **Bugs/Issues:**
+  - Order persistence currently uses local JSON; uninstalling the app removes history. Workaround: export history manually before uninstalling.
+  - Checkout page lacks server-side validation; rely on client validation and manual staff checks until backend integration exists.
 
 ## Deployment
 1. Clone repository and open `CoffeShopMAUI.sln` in Visual Studio.

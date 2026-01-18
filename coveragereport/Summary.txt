@@ -1,0 +1,27 @@
+Summary
+  Generated on: 18/01/2026 - 13:34:01
+  Coverage date: 18/01/2026 - 13:33:54
+  Parser: Cobertura
+  Assemblies: 1
+  Classes: 5
+  Files: 4
+  Line coverage: 88.6%
+  Covered lines: 78
+  Uncovered lines: 10
+  Coverable lines: 88
+  Total lines: 159
+  Branch coverage: 68.7% (11 of 16)
+  Covered branches: 11
+  Total branches: 16
+  Method coverage: 85.7% (24 of 28)
+  Full method coverage: 75% (21 of 28)
+  Covered methods: 24
+  Fully covered methods: 21
+  Total methods: 28
+
+CoffeShopMAUI.Core                             88.6%
+  CoffeShopMAUI.Models.CoffeeDrink             71.4%
+  CoffeShopMAUI.Models.Order                    100%
+  CoffeShopMAUI.Models.OrderLine                100%
+  CoffeShopMAUI.Services.CoffeeMenuService     83.7%
+  CoffeShopMAUI.Services.OrderStorageService   94.1%

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:vm="clr-namespace:CoffeShopMAUI.ViewModels"
-             xmlns:models="clr-namespace:CoffeShopMAUI.Models"
+             xmlns:models="clr-namespace:CoffeShopMAUI.Models;assembly=CoffeShopMAUI.Core"
              x:Class="CoffeShopMAUI.Pages.HomePage"
              Title="Coffee House"
              Padding="15"

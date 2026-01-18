@@ -81,6 +81,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <MauiXaml Update="Pages\AllCoffeeShopPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
       <MauiXaml Update="Pages\AccountInfoPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
@@ -96,6 +99,10 @@
       <MauiXaml Update="Resources\Styles\Styles.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CoffeShopMAUI.Core\CoffeShopMAUI.Core.csproj" />
     </ItemGroup>
 
 </Project>

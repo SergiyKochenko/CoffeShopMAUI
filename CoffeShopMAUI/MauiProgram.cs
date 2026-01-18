@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Storage;
 
 namespace CoffeShopMAUI;
 
@@ -33,7 +34,7 @@ public static class MauiProgram
     {
         // Register existing services and pages/viewmodels used in the project
         services.AddSingleton<CoffeeMenuService>();
-        services.AddSingleton<OrderStorageService>();
+        services.AddSingleton(sp => new OrderStorageService(FileSystem.Current.AppDataDirectory));
 
         services.AddSingleton<HomePage>()
                 .AddSingleton<HomeViewModel>();
