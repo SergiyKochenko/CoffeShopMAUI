@@ -13,12 +13,15 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
 6. [Technologies](#technologies)
 7. [Testing](#testing)
 8. [Deployment](#deployment)
-9. [Credits](#credits)
+9. [Screenshots](#screenshots)
+10. [Credits](#credits)
 
 ## Project Goals
 - **Business Goal:** Provide a mobile-first ordering experience for a boutique coffee shop.
 - **User Goal:** Quickly browse categories (hot drinks, cold drinks, food), adjust quantities, and place an order from any supported platform.
 - **Student Goal:** Demonstrate MAUI, MVVM, and local persistence skills for the CA submission.
+
+[Back to Table of Contents](#table-of-contents)
 
 ## UX Design
 - **Target Audience:** Walk-in customers, remote pickup users, and staff reviewing same-day orders.
@@ -29,6 +32,8 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
 - **Structure:** `AppShell` navigation drives page-to-page flow. Splash/login leads to the home page, which links to category pages, cart, checkout, and order history.
 - **Wireframes/Mockups:** _Include links or screenshots of Figma/Whimsical boards here._
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Features
 - Categorized menu (`Hot Drinks`, `Cold Drinks`, `Food`).
 - Quantity steppers and cart summary with item removal.
@@ -37,6 +42,8 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
 - Account/profile screen for optional customer preferences (placeholder for extension).
 - Responsive styling with reusable resources defined in `Resources/Styles`.
 - MVVM view models with commands, dependency-injected services, and navigation via `AppShell` routes.
+
+[Back to Table of Contents](#table-of-contents)
 
 ## User Manual
 1. **Launching the app**
@@ -64,10 +71,14 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
    - If totals look incorrect, refresh by pulling down on the cart list.
    - If the app was reinstalled, previous orders will be missing because storage is local; contact the shop if a receipt is needed.
 
+ [Back to Table of Contents](#table-of-contents)
+	
 ### Future Enhancements
 - Real-time stock updates from a remote API.
 - Push notifications confirming order readiness.
 - Payment gateway integration.
+
+[Back to Table of Contents](#table-of-contents)
 
 ## Information Architecture
 - **Data Models:** `MenuItem`, `CartItem`, `Order`, `OrderLine`.
@@ -82,6 +93,8 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
   - `OrderHistoryPage`
   - `AccountInfoPage`
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Technologies
 - .NET 8, C# 12
 - .NET MAUI (Android, iOS, Windows, Mac Catalyst)
@@ -89,13 +102,15 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
 - SQLite-net or System.Text.Json for storage
 - Visual Studio 2022 17.8+
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Testing
 Summarize manual and automated testing performed:
 - **Unit Tests:** Automated view-model/service tests live in `CoffeShopMAUI.Tests`. Run `dotnet test CoffeShopMAUI.Tests` to execute them. Latest Cobertura output (18/01/2026 13:34) reported:
   - Line coverage 88.6% (78/88 lines), branch coverage 68.7% (11/16), method coverage 85.7% (24/28).
   - Fully covered methods: 21/28.
   - Breakdown: `CoffeShopMAUI.Core` 88.6%, `CoffeeDrink` 71.4%, `Order` 100%, `OrderLine` 100%, `CoffeeMenuService` 83.7%, `OrderStorageService` 94.1%.
-	 
+ 	 
 	<img src="docs/coverage-summary.png" width="420" alt="Coverage summary" />
 	
 - **Manual Tests:**
@@ -112,6 +127,8 @@ Summarize manual and automated testing performed:
   - Order persistence currently uses local JSON; uninstalling the app removes history. Workaround: export history manually before uninstalling.
   - Checkout page lacks server-side validation; rely on client validation and manual staff checks until backend integration exists.
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Deployment
 1. Clone repository and open `CoffeShopMAUI.sln` in Visual Studio.
 2. Restore NuGet packages (`dotnet restore` or VS auto-restore).
@@ -121,13 +138,15 @@ Summarize manual and automated testing performed:
 
 _GitHub Hosting:_ README and screenshots live at the repository root so the project overview appears on the repo front page.
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Screenshots
 
 | Login | Home | Hot Drinks | Cold Drinks |
 | --- | --- | --- | --- |
 | <img src="docs/loging_page.png" width="240" alt="Login page" /> | <img src="docs/home_page.png" width="240" alt="Home page" /> | <img src="docs/hot_drinks_page.png" width="240" alt="Hot drinks page" /> | <img src="docs/cold_drinks_page.png" width="240" alt="Cold drinks page" /> |
 
-| Fresh Brews | All Categories | Food | Drink Detail |
+| Fresh Brews | All Categories | Food | Item Details
 | --- | --- | --- | --- |
 | <img src="docs/fresh_brews_page.png" width="240" alt="Fresh brews page" /> | <img src="docs/all_category_page.png" width="240" alt="All categories page" /> | <img src="docs/food_page.png" width="240" alt="Food page" /> | <img src="docs/detail_item_page.png" width="240" alt="Drink detail page" /> |
 
@@ -139,7 +158,10 @@ _GitHub Hosting:_ README and screenshots live at the repository root so the proj
 | --- | --- | --- | --- |
 | <img src="docs/my_account_page.png" width="240" alt="My account page" /> | <img src="docs/my_account_dropdown_menu.png" width="240" alt="My account dropdown menu" /> | <img src="docs/logout_dropdown_menu.png" width="240" alt="Logout dropdown menu" /> | <img src="docs/logout_popup.png" width="240" alt="Logout confirmation popup" /> |
 
+[Back to Table of Contents](#table-of-contents)
+
 ## Credits
-- **Author:** Student of ATU Donegal Sergiy Kochenko
-- **Acknowledgements:** Tutor Gerard McCloskey at ATU Donegal
-- 
+- **Author:** Student of ATU Donegal - Mr.Sergiy Kochenko
+- **Acknowledgements:** Tutor of Cross Platform Development - Mr.Gerard McCloskey at ATU Donegal
+
+[Back to Table of Contents](#table-of-contents)
