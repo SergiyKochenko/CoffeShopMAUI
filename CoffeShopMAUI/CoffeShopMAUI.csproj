@@ -34,6 +34,7 @@
         <CheckEolWorkloads>false</CheckEolWorkloads>
         <DefaultLanguage>en-US</DefaultLanguage>
         <ApplicationDefaultLanguage>en-US</ApplicationDefaultLanguage>
+        <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
@@ -50,6 +51,7 @@
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
         <!-- Splash Screen -->
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" />
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*.jpg" BaseSize="320,320" />
@@ -104,6 +106,14 @@
 
     <ItemGroup>
         <ProjectReference Include="..\CoffeShopMAUI.Core\CoffeShopMAUI.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="Platforms\Windows\Assets\SplashScreen.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Link>Assets/SplashScreen.png</Link>
+        </None>
     </ItemGroup>
 
 </Project>
