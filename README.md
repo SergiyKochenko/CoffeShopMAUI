@@ -73,6 +73,10 @@ The following annotated walkthrough highlights each major screen so reviewers ca
 | --- | --- | --- | --- |
 | <img src="docs/my_account_page.png" width="240" alt="My account page" /> | <img src="docs/my_account_dropdown_menu.png" width="240" alt="My account dropdown menu" /> | <img src="docs/logout_dropdown_menu.png" width="240" alt="Logout dropdown menu" /> | <img src="docs/logout_popup.png" width="240" alt="Logout confirmation popup" /> |
 
+| Admin Home | Admin Dashboard | Admin Customer Orders | Admin Account |
+| --- | --- | --- | --- |
+| <img src="docs/admin_home_page.png" width="240" alt="Admin home page" /> | <img src="docs/admin_dashboard.png" width="240" alt="Admin dashboard" /> | <img src="docs/admin_customer_orders.png" width="240" alt="Admin customer orders page" /> | <img src="docs/admin_account.png" width="240" alt="Admin account page" /> |
+
 [Back to Table of Contents](#table-of-contents)
 
 ## User Stories & Use Cases
