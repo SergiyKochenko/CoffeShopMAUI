@@ -38,6 +38,7 @@ A cross-platform .NET MAUI ordering app created for the ATU Cross-Platform Devel
 | MVVM design (10) | ViewModels (`HomeViewModel`, `AllCoffeeShopViewModel`, etc.) use CommunityToolkit.Mvvm attributes, dependency-injected services, and `RelayCommand`s. |
 | Retrieve sales via file/DB (20) | `OrderStorageService` (documented in `Information Architecture`) persists orders locally; `OrderHistoryPage` filters by current date to satisfy the reporting requirement. |
 | Checkout requirements | Checkout workflow gathers name/phone, generates order number, displays receipt, and stores order for history, matching CA brief. |
+| Admin oversight & passcode (10) | Admins unlock tooling from `MainPage` with the BREWMASTER2024 passcode, see a persistent badge on every page, and can jump directly to the dashboards. |
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -82,6 +83,7 @@ The following annotated walkthrough highlights each major screen so reviewers ca
 3. As a customer, I want to adjust quantities and see totals update instantly so mistakes are obvious before checkout.
 4. As a returning customer, I want previous orders listed so I can reorder or show proof of purchase.
 5. As staff, I want to review same-day orders so preparation stays on schedule.
+6. As an admin, I want a secure passcode gate plus drill-down views so I can audit customers and receipts from the mobile app.
 
 **Use Cases**
 
@@ -90,7 +92,8 @@ The following annotated walkthrough highlights each major screen so reviewers ca
 | Browse Menu | Customer | User taps `Browse all drinks` or a category chip | App loads `AllCoffeeShopPage`, applies selected category, and shows drink cards with images and price. | Supports search bar for text filtering. |
 | Manage Cart | Customer | User taps `Add to cart` on `DetailPage` | Quantity steppers set size/amount, command adds to cart, badge updates, and cart list recalculates totals. | Decrement/delete actions keep count >= 0; clear cart resets state. |
 | Checkout Order | Customer | User presses `Place Order` on `CartPage` | Navigation to `CheckoutPage`, validation of name/phone, confirmation generates order number, then `OrderReceiptPage` displays receipt. | Stores order for history view; failure path highlights invalid fields. |
-| Review Orders | Staff or Customer | User selects `History` tab | `OrderHistoryPage` loads persisted orders for current day sorted newest first. | Tapping entry reopens receipt for auditing. |
+| Review Orders | Staff or Customer | User selects `History` tab | `OrderHistoryPage` loads persisted orders for current day sorted newest first. | Every entry is tappable to reopen the receipt for auditing. |
+| Audit customers | Admin | Admin taps a customer card on `AdminDashboardPage` | Passcode-gated session navigates to `AdminCustomerOrdersPage`, lists every order for that customer, and opens receipts on tap. | Admin badge beside the title offers one-tap navigation. |
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -98,10 +101,10 @@ The following annotated walkthrough highlights each major screen so reviewers ca
 - Categorized menu (`Hot Drinks`, `Cold Drinks`, `Food`).
 - Quantity steppers and cart summary with item removal.
 - Checkout page collecting name and phone, generating a unique order number, and showing an order receipt.
-- Order history page filtered to the current day using persisted data (file I/O or SQLite).
-- Account/profile screen for optional customer preferences (placeholder for extension).
-- Responsive styling with reusable resources defined in `Resources/Styles`.
-- MVVM view models with commands, dependency-injected services, and navigation via `AppShell` routes.
+- Order history page filtered to the current day using persisted data (file I/O or SQLite), with tappable receipts for both customers and administrators.
+- Account/profile screen for optional customer preferences plus an admin-only reminder of the BREWMASTER2024 passcode inside `AccountInfoPage`.
+- Admin-only login surface with persistent badge, dashboard shortcut, and logout revocation, plus drill-down dashboards that list per-customer stats and receipts.
+- Responsive styling with reusable resources defined in `Resources/Styles` and MVVM view models with commands, dependency-injected services, and navigation via `AppShell` routes.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -124,10 +127,13 @@ The following annotated walkthrough highlights each major screen so reviewers ca
    - A receipt with the order number displays on `OrderReceiptPage`. Use `Continue Shopping` to return home.
 6. **Tracking past orders**
    - Open the `History` tab or `OrderHistoryPage` link to view the current day’s orders in reverse chronological order.
-   - Tap an entry to re-open its receipt.
-7. **Account & settings**
-   - From the profile icon, open `AccountInfoPage` to update saved preferences (name, favorite drinks, pickup notes).
-8. **Troubleshooting**
+   - Tap any entry to re-open its receipt (works for shoppers and admin reviewers).
+7. **Unlocking admin tools**
+   - On `MainPage`, enter your name, phone, and the BREWMASTER2024 passcode. The gold “Admin Dashboard” badge appears beside the title on every page.
+   - Tap the badge to jump to `AdminDashboardPage`, review all orders, drill into `AdminCustomerOrdersPage`, and open receipts from those lists.
+8. **Account & settings**
+   - From the profile icon, open `AccountInfoPage` to update saved preferences; admin sessions also surface the passcode as a reminder.
+9. **Troubleshooting**
    - If totals look incorrect, refresh by pulling down on the cart list.
    - If the app was reinstalled, previous orders will be missing because storage is local; contact the shop if a receipt is needed.
 
@@ -144,13 +150,15 @@ The following annotated walkthrough highlights each major screen so reviewers ca
 - **Data Models:** `MenuItem`, `CartItem`, `Order`, `OrderLine`.
 - **Persistence:** Repository abstraction (file or SQLite) registered in `MauiProgram.cs`.
 - **Navigation:**
-  - `MainPage` (splash/login)
+  - `MainPage` (splash/login + admin passcode prompt)
   - `HomePage`
   - `AllCoffeeShopPage` (category listing)
   - `CartPage`
   - `CheckoutPage`
   - `OrderReceiptPage`
-  - `OrderHistoryPage`
+  - `OrderHistoryPage` (customer + admin history)
+  - `AdminDashboardPage`
+  - `AdminCustomerOrdersPage`
   - `AccountInfoPage`
 
 [Back to Table of Contents](#table-of-contents)
@@ -158,6 +166,7 @@ The following annotated walkthrough highlights each major screen so reviewers ca
 ## Data Persistence
 - `OrderStorageService` (registered in `MauiProgram`) writes every confirmed `Order` to a JSON file named `orders.json` inside `FileSystem.Current.AppDataDirectory` (Android: `/data/data/<package>/files`, Windows: `%LOCALAPPDATA%\Packages\...\LocalState`).
 - Saved payload includes the generated order number, timestamp, customer name, phone, and each `OrderLine`, satisfying the brief’s requirement to capture customer and receipt data.
+- The service exposes `GetAllOrdersAsync` for dashboards and `GetOrdersForCustomerAsync` for per-customer drilldowns, keeping admin lists in sync.
 - `OrderHistoryViewModel` queries the same file via `GetOrdersForDateAsync(DateOnly.FromDateTime(DateTime.Today))`, ensuring the history page only surfaces orders from the current day.
 - Because the storage is file based, migrating to SQLite simply requires swapping the implementation registered for the `OrderStorageService` abstraction without changing the UI.
 
@@ -188,8 +197,9 @@ Summarize manual and automated testing performed:
 | Add items across categories | Add hot, cold, and food items from the home page, then open the cart | Totals reflect each item, per-item quantity matches selections |
 | Remove items from cart | From `CartPage`, tap trash icon beside an item | Item disappears, total recalculates immediately |
 | Checkout validation | On `CheckoutPage`, submit with empty fields, then with valid name/phone | Validation blocks invalid submissions; valid submission navigates to receipt |
-| Order history filter | Place two orders on the same day, then open `OrderHistoryPage` | Only today’s orders are listed, sorted newest first |
+| Order history filter | Place two orders on the same day, then open `OrderHistoryPage` | Only today’s orders are listed, sorted newest first, and tapping any entry opens the receipt |
 | Cross-platform smoke test | Deploy to Android emulator and Windows desktop | Navigation works, visuals align with design on both platforms |
+| Admin dashboards | Unlock admin mode, open `AdminDashboardPage`, drill into a customer, and tap an order | Customer stats load, per-customer list appears, and each order opens its receipt |
 
 - **Bugs/Issues:**
   - Order persistence currently uses local JSON; uninstalling the app removes history. Workaround: export history manually before uninstalling.

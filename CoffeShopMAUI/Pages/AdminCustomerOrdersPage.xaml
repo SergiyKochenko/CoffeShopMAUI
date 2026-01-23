@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CoffeShopMAUI.ViewModels"
+             xmlns:coreModels="clr-namespace:CoffeShopMAUI.Models;assembly=CoffeShopMAUI.Core"
+             x:Class="CoffeShopMAUI.Pages.AdminCustomerOrdersPage"
+             x:DataType="vm:AdminCustomerOrdersViewModel"
+             Title="Customer Orders">
+     <RefreshView Command="{Binding RefreshCommand}"
+                  IsRefreshing="{Binding IsBusy}">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="16">
+                <VerticalStackLayout Padding="16" Spacing="4">
+                    <Label Text="Name:"
+                           FontSize="14"
+                           TextColor="#8B5E3C"
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding CustomerName}"
+                           FontAttributes="Bold"
+                           FontSize="24"
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="Phone:"
+                           FontSize="14"
+                           TextColor="#8B5E3C"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,8,0,0" />
+                    <Label Text="{Binding PhoneNumber}"
+                           FontSize="16"
+                           TextColor="Gray"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,0,0,8" />
+                </VerticalStackLayout>
+
+                <CollectionView ItemsSource="{Binding Orders}"
+                                SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <Label Text="No orders for this customer yet."
+                               HorizontalOptions="Center" />
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="coreModels:Order">
+                            <Border Stroke="PaleGoldenrod"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="12"
+                                    Margin="0,0,0,12">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="{Binding OrderNumber}"
+                                           FontAttributes="Bold" />
+                                    <Label Text="{Binding CreatedAt, StringFormat='Placed: {0:dd MMM yyyy HH:mm}'}"
+                                           FontSize="12"
+                                           TextColor="DimGray" />
+                                    <Label Text="{Binding TotalAmount, StringFormat='Total: &#x20AC;{0:N2}'}"
+                                           FontAttributes="Bold" />
+                                    <CollectionView ItemsSource="{Binding Items}"
+                                                    SelectionMode="None">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="coreModels:OrderLine">
+                                                <Grid ColumnDefinitions="*,Auto" Margin="0,2">
+                                                    <Label Text="{Binding Name}" />
+                                                    <Label Grid.Column="1"
+                                                           Text="{Binding Quantity, StringFormat='x{0}'}"
+                                                           HorizontalOptions="End" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AdminCustomerOrdersViewModel}}, Path=ViewOrderCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

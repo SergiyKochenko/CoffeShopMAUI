@@ -55,4 +55,18 @@ public partial class OrderHistoryViewModel : ObservableObject
         var phone = Preferences.Default.Get("LastCustomerPhone", string.Empty);
         return (name, phone);
     }
+
+    [RelayCommand]
+    private async Task ViewOrder(Order? order)
+    {
+        if (order is null || Shell.Current is null)
+        {
+            return;
+        }
+
+        await Shell.Current.GoToAsync(nameof(OrderReceiptPage), true, new Dictionary<string, object>
+        {
+            [nameof(OrderReceiptViewModel.Order)] = order
+        });
+    }
 }

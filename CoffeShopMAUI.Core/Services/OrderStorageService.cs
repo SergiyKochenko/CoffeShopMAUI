@@ -37,6 +37,24 @@ public class OrderStorageService
             .ToList();
     }
 
+    public async Task<IReadOnlyList<Order>> GetAllOrdersAsync()
+    {
+        var orders = await LoadOrdersInternalAsync();
+        return orders
+            .OrderByDescending(o => o.CreatedAt)
+            .ToList();
+    }
+
+    public async Task<IReadOnlyList<Order>> GetOrdersForCustomerAsync(string customerName, string phoneNumber)
+    {
+        var orders = await LoadOrdersInternalAsync();
+        return orders
+            .Where(o => string.Equals(o.CustomerName, customerName, StringComparison.OrdinalIgnoreCase)
+                     && string.Equals(o.PhoneNumber, phoneNumber, StringComparison.OrdinalIgnoreCase))
+            .OrderByDescending(o => o.CreatedAt)
+            .ToList();
+    }
+
     private async Task<List<Order>> LoadOrdersInternalAsync()
     {
         if (!File.Exists(FilePath))

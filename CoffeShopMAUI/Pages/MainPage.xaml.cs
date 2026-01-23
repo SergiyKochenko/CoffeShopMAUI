@@ -1,9 +1,12 @@
-﻿using Microsoft.Maui.Storage;
+﻿using CoffeShopMAUI.Services;
+using Microsoft.Maui.Storage;
 
 namespace CoffeShopMAUI.Pages;
 
 public partial class MainPage : ContentPage
 {
+    private Entry? AdminPasscodeEntry => this.FindByName<Entry>("AdminCodeEntry");
+
     public MainPage()
     {
         InitializeComponent();
@@ -37,11 +40,35 @@ public partial class MainPage : ContentPage
 
         Preferences.Default.Set("LastCustomerName", safeName);
         Preferences.Default.Set("LastCustomerPhone", safePhone);
+        AdminAccessService.RevokeAccess();
 
         if (Application.Current is not null)
         {
             Application.Current.MainPage = new AppShell();
         }
+    }
+
+    private async void AdminButton_Clicked(object sender, EventArgs e)
+    {
+        var code = AdminPasscodeEntry?.Text;
+        if (!AdminAccessService.TryAuthenticate(code))
+        {
+            await DisplayAlert("Access denied", "Invalid admin passcode.", "OK");
+            return;
+        }
+
+        if (AdminPasscodeEntry is not null)
+        {
+            AdminPasscodeEntry.Text = string.Empty;
+        }
+        if (Application.Current is null)
+        {
+            return;
+        }
+
+        var shell = new AppShell();
+        Application.Current.MainPage = shell;
+        await shell.GoToAsync(nameof(AdminDashboardPage), true);
     }
 }
 

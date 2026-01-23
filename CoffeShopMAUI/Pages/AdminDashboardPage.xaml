@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CoffeShopMAUI.ViewModels"
+             xmlns:appModels="clr-namespace:CoffeShopMAUI.Models"
+             xmlns:coreModels="clr-namespace:CoffeShopMAUI.Models;assembly=CoffeShopMAUI.Core"
+             x:Class="CoffeShopMAUI.Pages.AdminDashboardPage"
+             x:DataType="vm:AdminDashboardViewModel"
+             Title="Admin Dashboard">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh"
+                     Command="{Binding LoadDataCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <RefreshView Command="{Binding LoadDataCommand}"
+                 IsRefreshing="{Binding IsBusy}">
+        <ScrollView>
+            <VerticalStackLayout Padding="16" Spacing="20">
+                <Label Text="Customer Accounts"
+                       FontSize="20"
+                       FontAttributes="Bold" />
+                <CollectionView ItemsSource="{Binding CustomerAccounts}"
+                                SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <Label Text="No customer accounts yet."
+                               HorizontalOptions="Center" />
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="appModels:CustomerAccountSummary">
+                            <Border Stroke="DarkGoldenrod"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="12"
+                                    Margin="0,0,0,12">
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding CustomerName}"
+                                           FontAttributes="Bold"
+                                           FontSize="18" />
+                                    <Label Text="{Binding PhoneNumber, StringFormat='Phone: {0}'}"
+                                           FontSize="14"
+                                           TextColor="Gray" />
+                                    <Label Text="{Binding OrdersCount, StringFormat='Orders: {0}'}" />
+                                    <Label Text="{Binding TotalSpent, StringFormat='Total Spent: &#x20AC;{0:N2}'}" />
+                                    <Label Text="{Binding LastOrder, StringFormat='Last Order: {0:dd MMM yyyy HH:mm}'}"
+                                           FontSize="12"
+                                           TextColor="DimGray" />
+                                </VerticalStackLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AdminDashboardViewModel}}, Path=ViewCustomerOrdersCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Label Text="All Orders"
+                       FontSize="20"
+                       FontAttributes="Bold" />
+                <CollectionView ItemsSource="{Binding Orders}"
+                                SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <Label Text="No orders available."
+                               HorizontalOptions="Center" />
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="coreModels:Order">
+                            <Border Stroke="PaleGoldenrod"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="12"
+                                    Margin="0,0,0,12">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="{Binding OrderNumber}"
+                                           FontAttributes="Bold" />
+                                    <Label Text="{Binding CreatedAt, StringFormat='Placed: {0:dd MMM yyyy HH:mm}'}"
+                                           FontSize="12"
+                                           TextColor="DimGray" />
+                                    <Label Text="{Binding CustomerName}" />
+                                    <Label Text="{Binding PhoneNumber, StringFormat='Phone: {0}'}"
+                                           FontSize="12"
+                                           TextColor="Gray" />
+                                    <Label Text="{Binding TotalAmount, StringFormat='Total: &#x20AC;{0:N2}'}"
+                                           FontAttributes="Bold" />
+                                </VerticalStackLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AdminDashboardViewModel}}, Path=ViewOrderCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

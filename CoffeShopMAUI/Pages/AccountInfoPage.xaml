@@ -4,14 +4,21 @@
              xmlns:vm="clr-namespace:CoffeShopMAUI.ViewModels"
              x:Class="CoffeShopMAUI.Pages.AccountInfoPage"
              x:DataType="vm:AccountInfoViewModel"
-             Title="My Account">
+             Title="{Binding PageTitle}">
     <ScrollView>
         <VerticalStackLayout Spacing="20"
                              Padding="20">
-            <Label Text="My Account Info"
+            <Label Text="{Binding PageTitle}"
                    FontSize="28"
                    FontAttributes="Bold"
                    HorizontalTextAlignment="Center" />
+
+            <Label Text="{Binding AdminPasscode, StringFormat='Admin Passcode: {0}'}"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   TextColor="#8B5E3C"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="{Binding IsAdmin}" />
 
             <Border StrokeShape="RoundRectangle 18"
                     StrokeThickness="1"

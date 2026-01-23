@@ -84,6 +84,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <MauiXaml Update="Pages\AdminCustomerOrdersPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="Pages\AdminDashboardPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
       <MauiXaml Update="Pages\AllCoffeeShopPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>

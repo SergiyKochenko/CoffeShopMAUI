@@ -49,6 +49,8 @@ public static class MauiProgram
         services.AddTransientWithShellRoute<OrderHistoryPage, OrderHistoryViewModel>(nameof(OrderHistoryPage));
         services.AddTransientWithShellRoute<OrderReceiptPage, OrderReceiptViewModel>(nameof(OrderReceiptPage));
         services.AddTransientWithShellRoute<AccountInfoPage, AccountInfoViewModel>(nameof(AccountInfoPage));
+        services.AddTransientWithShellRoute<AdminDashboardPage, AdminDashboardViewModel>(nameof(AdminDashboardPage));
+        services.AddTransientWithShellRoute<AdminCustomerOrdersPage, AdminCustomerOrdersViewModel>(nameof(AdminCustomerOrdersPage));
 
         return services;
     }

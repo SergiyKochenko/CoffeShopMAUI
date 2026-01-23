@@ -19,15 +19,6 @@ namespace CoffeShopMAUI.ViewModels
         public ObservableCollection<CoffeeDrink> FeaturedDrinks { get; }
 
         [RelayCommand]
-        private async Task GoToMenuPage() => await NavigateToMenuAsync(false, FreshBrewsDisplayTitle, FreshBrewsFilter);
-
-        [RelayCommand]
-        private async Task GoToMenuFromSearch() => await NavigateToMenuAsync(true, "Search for coffee");
-
-        [RelayCommand]
-        private async Task GoToAllItems() => await NavigateToMenuAsync(false, "All Items");
-
-        [RelayCommand]
         private static async Task Logout()
         {
             var page = Application.Current?.MainPage;
@@ -43,11 +34,22 @@ namespace CoffeShopMAUI.ViewModels
 
             Preferences.Default.Remove("LastCustomerName");
             Preferences.Default.Remove("LastCustomerPhone");
+            AdminAccessService.RevokeAccess();
 
             MainThread.BeginInvokeOnMainThread(() => Application.Current!.MainPage = new Pages.MainPage());
         }
 
-        private async Task NavigateToMenuAsync(bool fromSearch, string displayTitle, string category = "All")
+        [RelayCommand]
+        private async Task GoToMenuPage() => await NavigateToMenuAsync(false, FreshBrewsDisplayTitle, FreshBrewsFilter);
+
+        [RelayCommand]
+        private async Task GoToMenuFromSearch() => await NavigateToMenuAsync(true, "Search for coffee");
+
+        [RelayCommand]
+        private async Task GoToAllItems() => await NavigateToMenuAsync(false, "All Items");
+
+        [RelayCommand]
+        private async Task GoToHistory()
         {
             var shell = Shell.Current;
             if (shell is null)
@@ -55,14 +57,19 @@ namespace CoffeShopMAUI.ViewModels
                 return;
             }
 
-            var parameters = new Dictionary<string, object>
-            {
-                ["FromSearch"] = fromSearch,
-                ["Category"] = category,
-                [nameof(CoffeeMenuViewModel.DisplayTitle)] = displayTitle
-            };
+            await shell.GoToAsync(nameof(OrderHistoryPage), animate: true);
+        }
 
-            await shell.GoToAsync(nameof(CoffeeMenuPage), animate: true, parameters);
+        [RelayCommand]
+        private async Task GoToAccountInfo()
+        {
+            var shell = Shell.Current;
+            if (shell is null)
+            {
+                return;
+            }
+
+            await shell.GoToAsync(nameof(AccountInfoPage), animate: true);
         }
 
         [RelayCommand]
@@ -101,8 +108,7 @@ namespace CoffeShopMAUI.ViewModels
             await shell.GoToAsync(nameof(CoffeeDetailPage), animate: true, parameters);
         }
 
-        [RelayCommand]
-        private async Task GoToHistory()
+        private async Task NavigateToMenuAsync(bool fromSearch, string displayTitle, string category = "All")
         {
             var shell = Shell.Current;
             if (shell is null)
@@ -110,19 +116,14 @@ namespace CoffeShopMAUI.ViewModels
                 return;
             }
 
-            await shell.GoToAsync(nameof(OrderHistoryPage), animate: true);
-        }
-
-        [RelayCommand]
-        private async Task GoToAccountInfo()
-        {
-            var shell = Shell.Current;
-            if (shell is null)
+            var parameters = new Dictionary<string, object>
             {
-                return;
-            }
+                ["FromSearch"] = fromSearch,
+                ["Category"] = category,
+                [nameof(CoffeeMenuViewModel.DisplayTitle)] = displayTitle
+            };
 
-            await shell.GoToAsync(nameof(AccountInfoPage), animate: true);
+            await shell.GoToAsync(nameof(CoffeeMenuPage), animate: true, parameters);
         }
     }
 }

@@ -82,6 +82,35 @@
                     ImageSource="right_arrow"
                     ContentLayout="Right,12"
                     Clicked="EnterButton_Clicked" />
+
+            <Border StrokeShape="RoundRectangle 24"
+                    BackgroundColor="#1A000000"
+                    StrokeThickness="0"
+                    Padding="16"
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Admin Access"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Entry x:Name="AdminCodeEntry"
+                           Placeholder="Admin passcode"
+                           IsPassword="True"
+                           BackgroundColor="White"
+                           TextColor="Black"
+                           PlaceholderColor="#8B8B8B"
+                           ClearButtonVisibility="WhileEditing" />
+                    <Button Text="Admin Dashboard"
+                            BackgroundColor="#5C3D2E"
+                            TextColor="White"
+                            CornerRadius="22"
+                            Padding="5"
+                            Clicked="AdminButton_Clicked" />
+                    <Label Text="Restricted area for staff only"
+                           FontSize="12"
+                           TextColor="#FFE8C6" />
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 
