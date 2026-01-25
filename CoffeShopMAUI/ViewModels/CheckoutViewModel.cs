@@ -8,6 +8,8 @@ public partial class CheckoutViewModel : ObservableObject
 {
     private readonly CartViewModel _cartViewModel;
     private readonly OrderStorageService _orderStorageService;
+    private static readonly Regex CustomerNameRegex = new("^[A-Za-zÀ-ÿ'\\- ]+$", RegexOptions.Compiled);
+    private static readonly Regex AdminNameRegex = new("^[A-Za-zÀ-ÿ0-9'\\- ]+$", RegexOptions.Compiled);
 
     public CheckoutViewModel(CartViewModel cartViewModel, OrderStorageService orderStorageService)
     {
@@ -15,8 +17,7 @@ public partial class CheckoutViewModel : ObservableObject
         _orderStorageService = orderStorageService;
         _cartViewModel.PropertyChanged += OnCartPropertyChanged;
         OrderNumber = GenerateOrderNumber();
-        CustomerName = Preferences.Default.Get("LastCustomerName", string.Empty);
-        PhoneNumber = Preferences.Default.Get("LastCustomerPhone", string.Empty);
+        LoadCustomerInfo();
     }
 
     public ObservableCollection<CoffeeDrink> Items => _cartViewModel.Items;
@@ -50,9 +51,13 @@ public partial class CheckoutViewModel : ObservableObject
         var trimmedName = CustomerName.Trim();
         var trimmedPhone = PhoneNumber.Trim();
 
-        if (!Regex.IsMatch(trimmedName, @"^[A-Za-zÀ-ÿ'\- ]+$"))
+        var nameRegex = AdminAccessService.HasAccess ? AdminNameRegex : CustomerNameRegex;
+        if (!nameRegex.IsMatch(trimmedName))
         {
-            await Toast.Make("Name must contain letters only", ToastDuration.Short).Show();
+            var message = AdminAccessService.HasAccess
+                ? "Admin name can contain letters and numbers"
+                : "Name must contain letters only";
+            await Toast.Make(message, ToastDuration.Short).Show();
             return;
         }
 
@@ -84,9 +89,10 @@ public partial class CheckoutViewModel : ObservableObject
         });
 
         OrderNumber = GenerateOrderNumber();
-        CustomerName = string.Empty;
-        PhoneNumber = string.Empty;
+        LoadCustomerInfo();
     }
+
+    public void RefreshIdentity() => LoadCustomerInfo();
 
     private void OnCartPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
@@ -94,6 +100,28 @@ public partial class CheckoutViewModel : ObservableObject
         {
             OnPropertyChanged(nameof(TotalAmount));
         }
+    }
+
+    private void LoadCustomerInfo()
+    {
+        var savedName = Preferences.Default.Get("LastCustomerName", string.Empty);
+        var savedPhone = Preferences.Default.Get("LastCustomerPhone", string.Empty);
+
+        if (AdminAccessService.HasAccess)
+        {
+            var (adminName, adminPhone) = AdminAccessService.GetActiveAdmin();
+            if (!string.IsNullOrWhiteSpace(adminName))
+            {
+                savedName = adminName;
+            }
+            if (!string.IsNullOrWhiteSpace(adminPhone))
+            {
+                savedPhone = adminPhone;
+            }
+        }
+
+        CustomerName = savedName;
+        PhoneNumber = savedPhone;
     }
 
     private static string GenerateOrderNumber() => $"ORD-{DateTimeOffset.Now:yyyyMMddHHmmss}";

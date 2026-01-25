@@ -6,8 +6,8 @@ public partial class AccountInfoViewModel : ObservableObject
 {
     public AccountInfoViewModel()
     {
-        LoadAccountInfo();
         UpdateAdminState();
+        LoadAccountInfo();
     }
 
     [ObservableProperty]
@@ -31,14 +31,30 @@ public partial class AccountInfoViewModel : ObservableObject
     [RelayCommand]
     private void Refresh()
     {
-        LoadAccountInfo();
         UpdateAdminState();
+        LoadAccountInfo();
     }
 
     private void LoadAccountInfo()
     {
-        CustomerName = Preferences.Default.Get("LastCustomerName", string.Empty);
-        PhoneNumber = Preferences.Default.Get("LastCustomerPhone", string.Empty);
+        var savedName = Preferences.Default.Get("LastCustomerName", string.Empty);
+        var savedPhone = Preferences.Default.Get("LastCustomerPhone", string.Empty);
+
+        if (IsAdmin)
+        {
+            var (adminName, adminPhone) = AdminAccessService.GetActiveAdmin();
+            if (!string.IsNullOrWhiteSpace(adminName))
+            {
+                savedName = adminName;
+            }
+            if (!string.IsNullOrWhiteSpace(adminPhone))
+            {
+                savedPhone = adminPhone;
+            }
+        }
+
+        CustomerName = savedName;
+        PhoneNumber = savedPhone;
         HasInfo = !string.IsNullOrWhiteSpace(CustomerName) && !string.IsNullOrWhiteSpace(PhoneNumber);
     }
 

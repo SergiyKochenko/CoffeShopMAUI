@@ -50,12 +50,28 @@ public partial class MainPage : ContentPage
 
     private async void AdminButton_Clicked(object sender, EventArgs e)
     {
+        var adminName = NameEntry?.Text?.Trim();
+        var adminPhone = PhoneEntry?.Text?.Trim();
+
+        if (string.IsNullOrWhiteSpace(adminName) || string.IsNullOrWhiteSpace(adminPhone))
+        {
+            await DisplayAlert("Admin access", "Enter your admin name and phone number before opening the dashboard.", "OK");
+            return;
+        }
+
         var code = AdminPasscodeEntry?.Text;
         if (!AdminAccessService.TryAuthenticate(code))
         {
             await DisplayAlert("Access denied", "Invalid admin passcode.", "OK");
             return;
         }
+
+        var safeName = adminName!;
+        var safePhone = adminPhone!;
+
+        Preferences.Default.Set("LastCustomerName", safeName);
+        Preferences.Default.Set("LastCustomerPhone", safePhone);
+        AdminAccessService.RecordActiveAdmin(safeName, safePhone);
 
         if (AdminPasscodeEntry is not null)
         {

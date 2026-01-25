@@ -15,7 +15,19 @@ public partial class CheckoutPage : ContentPage
         BindingContext = viewModel;
     }
 
-    private static readonly Regex _nameRegex = new("^[A-Za-zÀ-ÿ'\\- ]*$", RegexOptions.Compiled);
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        if (BindingContext is CheckoutViewModel vm)
+        {
+            vm.RefreshIdentity();
+        }
+    }
+
+    private static readonly Regex _customerNameRegex = new("^[A-Za-zÀ-ÿ'\\- ]*$", RegexOptions.Compiled);
+    private static readonly Regex _adminNameRegex = new("^[A-Za-zÀ-ÿ0-9'\\- ]*$", RegexOptions.Compiled);
+
+    private static Regex CurrentRegex => AdminAccessService.HasAccess ? _adminNameRegex : _customerNameRegex;
 
     private void NameEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
@@ -24,7 +36,7 @@ public partial class CheckoutPage : ContentPage
             return;
         }
 
-        if (_nameRegex.IsMatch(e.NewTextValue ?? string.Empty))
+        if (CurrentRegex.IsMatch(e.NewTextValue ?? string.Empty))
         {
             return;
         }

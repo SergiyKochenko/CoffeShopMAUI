@@ -107,7 +107,7 @@ The following annotated walkthrough highlights each major screen so reviewers ca
 - Checkout page collecting name and phone, generating a unique order number, and showing an order receipt.
 - Order history page filtered to the current day using persisted data (file I/O or SQLite), with tappable receipts for both customers and administrators.
 - Account/profile screen for optional customer preferences plus an admin-only reminder of the BREWMASTER2024 passcode inside `AccountInfoPage`.
-- Admin-only login surface with persistent badge, dashboard shortcut, and logout revocation, plus drill-down dashboards that list per-customer stats and receipts.
+- Admin-only login surface with persistent badge, dashboard shortcut, and logout revocation, plus drill-down dashboards that list per-customer stats and receipts. Admin sessions now persist the signed-in staff identity so checkout and the Admin Account screen always show the active admin (allowing alphanumeric IDs) while customer names remain alphabetic-only.
 - Responsive styling with reusable resources defined in `Resources/Styles` and MVVM view models with commands, dependency-injected services, and navigation via `AppShell` routes.
 
 [Back to Table of Contents](#table-of-contents)
